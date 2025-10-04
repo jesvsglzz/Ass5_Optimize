@@ -7,17 +7,24 @@
 # Output: 3
 
 def most_frequent(numbers):
-    # Your code here
-    pass
+    freq = {}
+    max_count = 0
+    result = None
+    for num in numbers:
+        freq[num] = freq.get(num, 0) + 1
+        if freq[num] > max_count:
+            max_count = freq[num]
+            result = num
+    return result
 
 """
 Time and Space Analysis for problem 1:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(n); must scan all numbers at least once.
+- Worst-case: O(n); same as best, we still process all numbers.
+- Average-case: O(n).
+- Space complexity: O(k), where k is number of unique elements.
+- Why this approach? Efficient dictionary counting allows single-pass tracking.
+- Could it be optimized? No major optimization; dictionary counting is optimal here.
 """
 
 
@@ -29,17 +36,22 @@ Time and Space Analysis for problem 1:
 # Output: [4, 5, 6, 7]
 
 def remove_duplicates(nums):
-    # Your code here
-    pass
+    seen = set()
+    result = []
+    for num in nums:
+        if num not in seen:
+            seen.add(num)
+            result.append(num)
+    return result
 
 """
 Time and Space Analysis for problem 2:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(n); must check all items.
+- Worst-case: O(n); same since each item processed once.
+- Average-case: O(n).
+- Space complexity: O(n) for storing unique elements.
+- Why this approach? Using a set allows O(1) lookups to avoid duplicates.
+- Could it be optimized? Not really; this is optimal for order-preserving deduplication.
 """
 
 
@@ -52,17 +64,23 @@ Time and Space Analysis for problem 2:
 # Output: [(1, 4), (2, 3)]
 
 def find_pairs(nums, target):
-    # Your code here
-    pass
+    seen = set()
+    pairs = []
+    for num in nums:
+        complement = target - num
+        if complement in seen:
+            pairs.append((complement, num))
+        seen.add(num)
+    return pairs
 
 """
 Time and Space Analysis for problem 3:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(n); must scan all elements.
+- Worst-case: O(n); same since one pass through list.
+- Average-case: O(n).
+- Space complexity: O(n) for set and pairs.
+- Why this approach? Using a set gives O(1) lookups and avoids nested loops.
+- Could it be optimized? A sorting + two-pointer method also works (O(n log n)), but this O(n) approach is faster.
 """
 
 
@@ -75,16 +93,22 @@ Time and Space Analysis for problem 3:
 # add_n_items(6) → should print when resizing happens.
 
 def add_n_items(n):
-    # Your code here
-    pass
+    capacity = 1
+    arr = []
+    for i in range(n):
+        if len(arr) == capacity:
+            print(f"Resizing: capacity {capacity} to {capacity * 2}")
+            capacity *= 2
+        arr.append(i)
+    return arr
 
 """
 Time and Space Analysis for problem 4:
-- When do resizes happen?
-- What is the worst-case for a single append?
-- What is the amortized time per append overall?
-- Space complexity:
-- Why does doubling reduce the cost overall?
+- When do resizes happen? When list size == capacity.
+- What is the worst-case for a single append? O(n); when resizing occurs and items are copied.
+- What is the amortized time per append overall? O(1).
+- Space complexity: O(n).
+- Why does doubling reduce the cost overall? Because resizes happen less frequently as size grows, so average cost per append stays constant.
 """
 
 
@@ -98,15 +122,44 @@ Time and Space Analysis for problem 4:
 # Because: [1, 1+2, 1+2+3, 1+2+3+4]
 
 def running_total(nums):
-    # Your code here
-    pass
+    result = []
+    current_sum = 0
+    for num in nums:
+        current_sum += num
+        result.append(current_sum)
+    return result
 
 """
 Time and Space Analysis for problem 5:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(n); need to sum all.
+- Worst-case: O(n).
+- Average-case: O(n).
+- Space complexity: O(n) for result list.
+- Why this approach? Simple single-pass accumulation.
+- Could it be optimized? This is already optimal.
 """
+
+# Testing
+
+print("- Problem 1: Most Frequent")
+print(most_frequent([1, 3, 2, 3, 4, 1, 3]))   # Expected 3
+print(most_frequent([1, 1, 2, 2]))           # Expected 1 or 2
+print(most_frequent([5]))                    # Expected 5
+
+print("-Problem 2: Remove Duplicates")
+print(remove_duplicates([4, 5, 4, 6, 5, 7])) # Expected [4, 5, 6, 7]
+print(remove_duplicates([]))                 # Expected []
+print(remove_duplicates([1, 1, 1]))          # Expected [1]
+
+print("- Problem 3: Find Pairs")
+print(find_pairs([1, 2, 3, 4], 5))           # Expected [(1, 4), (2, 3)]
+print(find_pairs([1, 2], 10))                # Expected []
+print(find_pairs([], 5))                     # Expected []
+
+print("- Problem 4: Add N Items")
+print(add_n_items(6))                        # Expected [0, 1, 2, 3, 4, 5]
+
+print("- Problem 5: Running Total")
+print(running_total([1, 2, 3, 4]))           # Expected [1, 3, 6, 10]
+print(running_total([]))                     # Expected []
+print(running_total([5]))                    # Expected [5]
