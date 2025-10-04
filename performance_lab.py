@@ -6,6 +6,14 @@
 # Input: [1, 3, 2, 3, 4, 1, 3]
 # Output: 3
 
+# Original Version (two passes)
+def most_frequent_original(numbers):
+    count = {}
+    for num in numbers:
+        count[num] = count.get(num, 0) + 1
+    return max(count, key=count.get)
+
+# Optimized Version (one pass)
 def most_frequent(numbers):
     freq = {}
     max_count = 0
@@ -18,14 +26,21 @@ def most_frequent(numbers):
     return result
 
 """
+Optimization:
+- Original version does two passes (count + max); O(n) time.
+- Optimized version keeps track of max while counting; one pass.
+- Space complexity remains O(n).
+- Shows clear improvement in efficiency without extra memory.
+
 Time and Space Analysis for problem 1:
 - Best-case: O(n); must scan all numbers at least once.
 - Worst-case: O(n); same as best, we still process all numbers.
 - Average-case: O(n).
 - Space complexity: O(k), where k is number of unique elements.
 - Why this approach? Efficient dictionary counting allows single-pass tracking.
-- Could it be optimized? No major optimization; dictionary counting is optimal here.
+- Could it be optimized? No major optimization; dictionary counting is optimal now.
 """
+
 
 
 # 🔍 Problem 2: Remove Duplicates While Preserving Order
